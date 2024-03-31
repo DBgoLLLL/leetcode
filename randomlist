@@ -1,0 +1,27 @@
+///< 从[minNum, maxNum]整数范围内获取numCnt个随机数
+///< 随机函数需要重新实现生成一个随机整数
+///< 将递增序列从头到尾处理，roll一个随机数表示与该数字交换的位置，直到所有位置都被交换一次，产生一个随机数列，取最前面的numCnt个
+void genRandomList(int minNum, int maxNum, int *list, int numCnt)
+{
+  int i = 0;
+  int temp = 0;
+  int changePos = 0;
+  int arrageLen = maxNum - minNum +1;
+  int numListBuf = (int *)malloc(sizeof(int) * numCnt);
+
+  numCnt = MIN(arrageLen, numCnt);
+  for(i = minNum; i <= maxNum; i++)
+  {
+    numListBuf[i] = i;
+  }
+  for (i = 0; i < arrageLen; i++)
+  {
+    changePos = (int)random()%(arrageLen);
+    temp = numListBuf[i];
+    numListBuf[i] = numListBuf[changePos];
+    numListBuf[changePos] = temp;
+  }
+  memcpy(list, numListBuf, sizeof(int) * numCnt);
+  free(numListBuf);
+  numListBuf = NULL;
+}
